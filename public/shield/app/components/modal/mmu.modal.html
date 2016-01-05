@@ -1,0 +1,15 @@
+<h2 class="cmodal-alias"><strong>{{model.name}}</strong></h2>
+<h5 class="cmodal-fullname" ng-show="model.fullName">aka {{model.fullName}}</h5>
+<div class="modal-body">
+    <div class="shield-data">
+        <p><strong>Powers</strong></p>
+        {{model.powers}}
+    </div>
+    <div class="shield-data">
+        <p><strong>Weapons</strong></p>
+        {{model.weapons}}
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="cls()">Close</button>
+</div>

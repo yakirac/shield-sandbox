@@ -10,35 +10,64 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<title>SHIELD Sandbox</title>
 	<!-- build:css assets/css/bundle.min.css -->
-	<link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="shield/bower_components/bootstrap-css/css/bootstrap.min.css" />
+	<link href="shield/assets/css/site.css" rel="stylesheet">
 	<!-- endbuild -->
 </head>
 <body ng-app="app">
-<div ui-view ng-cloak></div>
+<div ui-view id="page-content-wrapper" ng-cloak></div>
 <script>cl = function() { return console.log.apply( console, arguments ); };</script>
 <!-- build:js assets/js/bundle.min.js -->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="bower_components/lodash/lodash.min.js"></script>
-	<script src="bower_components/bootstrap-css/js/bootstrap.min.js"></script>
-	<script src="bower_components/angular/angular.min.js"></script>
-	<script src="bower_components/angular-route/angular-route.min.js"></script>
-	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-	<script src="bower_components/angular-messages/angular-messages.min.js"></script>
-	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
-	<script src="bower_components/restangular/dist/restangular.min.js"></script>
-	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="shield/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="shield/bower_components/lodash/lodash.min.js"></script>
+	<script src="shield/bower_components/bootstrap-css/js/bootstrap.min.js"></script>
+	<script src="shield/bower_components/angular/angular.min.js"></script>
+	<script src="shield/bower_components/angular-route/angular-route.min.js"></script>
+	<script src="shield/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="shield/bower_components/angular-messages/angular-messages.min.js"></script>
+	<script src="shield/bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="shield/bower_components/restangular/dist/restangular.min.js"></script>
+	<script src="shield/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script src="shield/bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+	<script src="shield/bower_components/angular-holderjs/src/holder.js"></script>
+	<script src="shield/bower_components/moment/min/moment.min.js"></script>
+	<script src="shield/bower_components/angular-momentjs/angular-momentjs.min.js"></script>
+	<script src="shield/bower_components/holderjs/holder.min.js"></script>
+	<script src="shield/bower_components/parse/parse-1.6.0.js"></script>
 	<!--core JS files -->
-	<script src="app/app.js"></script>
-	<script src="app/core/core.js"></script>
-	<script src="app/core/configs/config.js"></script>
+	<script src="shield/app/app.js"></script>
+	<script src="shield/app/core/core.js"></script>
+	<script src="shield/app/core/configs/config.js"></script>
+
 	<!-- services -->
+	<script src="shield/app/services/hero.service.js"></script>
+	<script src="shield/app/services/blnce.service.js"></script>
+	<script src="shield/app/services/parse.service.js"></script>
+	<script src="shield/app/services/appstatus.service.js"></script>
 
 	<!-- default routes -->
-	<script src="app/routes/default/default.js"></script>
-	<script src="app/routes/default/default.controller.js"></script>
-	<script src="app/routes/default/default.route.js"></script>
+	<script src="shield/app/routes/default/default.js"></script>
+	<script src="shield/app/routes/default/default.controller.js"></script>
+	<script src="shield/app/routes/default/default.route.js"></script>
+
+	<!-- mcmarverluniverse -->
+	<script src="shield/app/routes/mcmarveluniverse/mcmarveluniverse.js"></script>
+	<script src="shield/app/routes/mcmarveluniverse/mcmarveluniverse.controller.js"></script>
+	<script src="shield/app/routes/mcmarveluniverse/mcmarveluniverse.route.js"></script>
+
+	<!-- blnce -->
+	<script src="shield/app/routes/blnce/blnce.js"></script>
+	<script src="shield/app/routes/blnce/blnce.controller.js"></script>
+	<script src="shield/app/routes/blnce/blnce.user.controller.js"></script>
+	<script src="shield/app/routes/blnce/blnce.route.js"></script>
+
 	<!-- directives -->
-	<script src="app/components/gist.directive.js"></script>
+	<script src="shield/app/components/header/header.directive.js"></script>
+	<script src="shield/app/components/modal/modal.directive.js"></script>
+	<script src="shield/app/components/characters/characters.directive.js"></script>
+	<script src="shield/app/components/character/character.directive.js"></script>
+	<script src="shield/app/components/footer/footer.directive.js"></script>
+	<script src="shield/app/components/gist.directive.js"></script>
 
 
 <!-- endbuild -->

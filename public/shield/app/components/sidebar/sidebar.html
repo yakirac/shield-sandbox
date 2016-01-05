@@ -1,0 +1,17 @@
+<div id="sidebar-wrapper">
+	<ul class="sidebar-nav">
+		<li class="sidebar-brand">
+			<a ui-sref="/" href="#">
+				<img src="mcmarveluniverse/assets/images/AngularJS-large.png" height="50" />
+			</a>
+		</li>
+		<li ng-repeat="nav in vm.sidebar">
+			<a ng-cloak ng-click="setActiveLink( nav )" ng-class="{active: isSelected( nav ) }" ng-href="#{{ nav.href }}">{{ nav.text }}</a>
+			<ul ng-show="hasSubNav( nav )">
+				<li ng-repeat="sub in nav.subnav">
+					<a ng-cloak ng-click="setActiveLink( sub  )" ng-class="{active: isSelected( sub ) }" ng-href="#{{ sub.href }}">{{ sub.text }}</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

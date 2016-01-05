@@ -1,0 +1,46 @@
+<div class="container">
+    <div>
+        <h1 align="center" style="font-size:60px;">Bln&cent;e</h1>
+    </div>
+    <div ng-hide="blnceUser.showSettings">
+        <p>This user is not authorized to view this page. Please <a href="#/blnce">login</a> to continue.</p>
+    </div>
+    <div id="app-data" ng-show="blnceUser.showSettings">
+        <div>
+            <div class="row">
+                <h4>Profile</h4>
+                <form class="form-usersettings">
+                  <h4 class="form-signin-heading">{{blnceUser.errorMessage}}</h4>
+                  <label for="inputUsername" class="sr-only">Name(optional)</label>
+                  <input type="text" id="name" class="form-control settings" ng-model="userSettings.name" placeholder="Name(optional)" autofocus>
+                  <label for="inputEmail" class="sr-only">Email address</label>
+                  <input type="email" id="email" class="form-control settings" ng-model="blnceUser.userSettings.username" placeholder="Email Address (i.e. user@example.com)" required>
+                  <label for="inputPassword" class="sr-only">Password</label>
+                  <input type="password" id="password" class="form-control settings" ng-model="blnceUser.userSettings.password" placeholder="Password" required>
+                </form>
+            </div>
+            <div class="row">
+                <h4>Bank Accounts</h4>
+                <div id="bankAccounts">
+                    <p ng-hide="blnceUser.userSettings.bankAccounts.length">You currently do not have any bank accounts linked to your profile. Add one below.</p>
+                    <div class="bank-account">
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-default" ng-click=""> <span class="green">+ Add A New Bank Account</span></button>
+                </div>
+
+            </div>
+            <div class="row">
+                <h4>Notification Settings</h4>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="notifications-email" ng-model="blnceUser.userSettings.notificationSettings.email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-default" ng-click=""> <span class="green">Save Settings</span></button>
+            </div>
+            <!--<shieldmodal ng-show="blnce.showMdl" model="blnce.transaction" sh="blnce.showMdl" tmpl="blnc" stype="currentMonthTransactions" ctype="transactions"></shieldmodal>-->
+        </div>
+    </div>
+</div>

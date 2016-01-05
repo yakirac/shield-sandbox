@@ -8,11 +8,12 @@
 ## How do I get set up? ###
 
 * Pull down remote
-* Install Node and NPM
+* Install Node and NPM and MongoDB
 * `cd server` to server folder
 * run `sudo npm install -g`
 * `cd ../public` folder
 * run `sudo bower install`
+* start MongoDB in a separate terminal window with `mongod`
 * `cd server` folder
 * run `nodemon server`
 * Application should be running on [localhost:3800](http://localhost:3800)

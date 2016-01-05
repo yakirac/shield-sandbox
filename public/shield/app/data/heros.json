@@ -1,0 +1,102 @@
+[
+    {
+        "id" : 1009189,
+        "name" : "Black Widow",
+        "fullName" : "Natalia \"Natasha\" Alianovna Romanova",
+        "holderImage" : "holder.js/293x210?text=Black Widow&theme=vine",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/f/30/50fecad1f395b.jpg",
+        "description" : "",
+        "powers" : "Government treatments have slowed her aging, augmented her immune system and enhanced her physical durability.",
+        "weapons" : "Black Widow customarily wears two bracelets equipped to discharge the \"widow’s bite,\" high-frequency electrostatic bolts of up to 30,000 volts, capable of stunning even a superhuman opponent at a range of at least 20 feet, shoot tear gas cartridges and act as a radio transmitter. The bracelets’ various functions are activated by galvanic sensors keyed to Black Widow’s wrist musculature. At times she carries plastic explosive discs equivalent to 4 pounds of TNT in her belt and uses automatic weapons and/or combat knives as necessary."
+    },
+    {
+        "id" : 1011411,
+        "name" : "Chores Macgillicudy",
+        "fullName" : "",
+        "holderImage" : "holder.js/293x210?text=Chores Macgillicudy",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/5/80/4c002e1c622c8.jpg",
+        "description" : "",
+        "powers" : "Unrevealed, if any",
+        "weapons" : "None"
+    },
+    {
+        "id" : 1009262,
+        "name" : "Daredevil",
+        "fullName" : "Matthew Michael Murdock",
+        "holderImage" : "holder.js/293x210?text=Daredevil&theme=vine",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/d/50/50febb79985ee.jpg",
+        "description" : "Abandoned by his mother, Matt Murdock was raised by his father, boxer \"Battling Jack\" Murdock, in Hell's Kitchen. Realizing that rules were needed to prevent people from behaving badly, young Matt decided to study law; however, when he saved a man from an oncoming truck, it spilled a radioactive cargo that rendered Matt blind while enhancing his remaining senses. Under the harsh tutelage of blind martial arts master Stick, Matt mastered his heightened senses and became a formidable fighter.",
+        "powers" : "In compensation for his lost sight, Daredevil’s other four senses have been preternaturally enhanced.",
+        "weapons" : "Daredevil carries a billy club, disguised as a cane in civilian garb. It is a versatile, multi-purpose weapon, stronger than any fist. It contains thirty feet of aircraft control cable, which is connected to a case-hardened steel grapnel. Internal mechanisms allow the cable to be neatly wound and unwound, while a powerful spring launches the grapnel. Daredevil usually carries two fighting batons."
+    },
+    {
+        "id" : 1009268,
+        "name" : "Deadpool",
+        "fullName" : "Wade Wilson",
+        "holderImage" : "holder.js/293x210?text=Deadpool",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/9/90/5261a86cacb99.jpg",
+        "description" : "",
+        "powers" : "Deadpool possesses a superhuman healing factor derived from that of the mutant Wolverine that allows him to regenerate damaged or destroyed areas of his cellular structure at a rate far greater than that of an ordinary human. As such, he can regrow severed limbs or vital organs. The speed at which this healing factor works varies in direct proportion to the severity of the damage Deadpool suffers. This healing factor also affords Deadpool a virtual immunity to poisons and most drugs, as well as an enhanced resistance to diseases and an extended life span. Unlike Wolverine’s natural healing factor, Deadpool’s is mentally driven to a partial extent",
+        "weapons" : "Deadpool employs any number of weapons depending on his current assignment. Most often he will utilize a combination of guns and blades."
+    },
+    {
+        "id" : 1009313,
+        "name" : "Gambit",
+        "fullName" : "Remy Etienne LeBeau",
+        "holderImage" : "holder.js/293x210?text=Gambit",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/a/40/52696aa8aee99.jpg",
+        "description" : "",
+        "powers" : "Gambit has the mutant ability to tap into the potential energy contained within an object and transform it into kinetic energy upon touching it. When Gambit thus charges an object and throws it at a target, the object releases this energy explosively on impact. Gambit was unable to use this power to charge living objects until Sage restored his vision and powers, allowing him to now charge both living and non-living objects. / As Death: He can control deadly gas and his charged playing cards can kill instantly.",
+        "weapons" : ""
+    },
+    {
+        "id" : 1009351,
+        "name" : "Hulk",
+        "fullName" : "Robert Bruce Banner",
+        "holderImage" : "holder.js/293x210?text=Hulk&theme=vine",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0.jpg",
+        "description" : "Caught in a gamma bomb explosion while trying to save the life of a teenager, Dr. Bruce Banner was transformed into the incredibly powerful creature called the Hulk. An all too often misunderstood hero, the angrier the Hulk gets, the stronger the Hulk gets.",
+        "powers" : "The Hulk possesses an incredible level of superhuman physical ability. His capacity for physical strength is potentially limitless due to the fact that the Hulk's strength increases proportionally with his level of great emotional stress, anger in particular.",
+        "weapons" : "While on Sakaar, Hulk fought with gladiator's weapons"
+    },
+    {
+        "id" : 1017294,
+        "name" : "Lego Iron Man",
+        "fullName" : "Anthony Edward \"Tony\" Stark",
+        "holderImage" : "holder.js/293x210?text=Lego Iron Man",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/6/90/5239c3cc8a259.jpg",
+        "description" : "",
+        "powers" : "None; Tony's body had been enhanced by the modified techno-organic virus, Extremis, but it is currently inaccessible and inoperable.",
+        "weapons" : "The Iron Man armor includes Tony’s primary energy weapon, repulsor rays, a powerful particle beam which is standard equipment in the palms of his armor; the repulsor ray can repel physical and energy-based attacks, traveling as either a single stream or as a wide-field dispersal. The armor has also been outfitted with pulse bolts (extremely powerful plasma discharges which grow in strength as they seek their target), sonic generators, explosive shell projectiles, mini-missiles, magnetic field generators and a laser torch built into the finger of Tony’s gauntlet. The armor’s surface can generate an electric charge to dispel attackers."
+    },
+    {
+        "id" : 1009515,
+        "name" : "Punisher",
+        "fullName" : "Frank Castle (born Castiglione)",
+        "holderImage" : "holder.js/293x210?text=Punisher&theme=vine",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/3/90/5261675f6b22f.jpg",
+        "description" : "",
+        "powers" : "None",
+        "weapons" : "The Punisher's ever-changing arsenal of weaponry includes various automatic and semi-automatic rifles, and an array of handguns, fragmentation and tear gas grenades, other explosives, and combat knives. A personal favorite is his ballistic knife, which can launch its blade with lethal force. He commonly uses M16 .223 caliber automatic rifles, Sterling Mark 6 9mm, semi-automatic rifles, 9mm Browning Llama automatic pistols, .45 caliber automatic frame rechambered for 9mm. ammunition, .223 caliber Derringers, and Gerber Mark II combat knives."
+    },
+    {
+        "id" : 1009591,
+        "name" : "Silver Samurai",
+        "fullName" : "Keniuchio Harada",
+        "holderImage" : "holder.js/293x210?text=Silver Samurai&theme=vine",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/5/50/4c003c13058bd.jpg",
+        "description" : "Keniuchio Harada is the mutant son of the former Japanese crimelord Shingen Harada.",
+        "powers" : "The Silver Samurai is a mutant with the ability to generate a tachyon energy field from within his body. He typically focuses this field through his sword, allowing it to cut through almost any substance.",
+        "weapons" : "The Silver Samurai wields a traditional samurai long sword, or katana, and has previously wielded both the Black Blade of Muramasa and the Honor Sword of Clan Yashida. On occasion he uses shuriken and other traditional samurai weaponry."
+    },
+    {
+        "id" : 1009707,
+        "name" : "Wasp",
+        "fullName" : "Janet Van Dyne",
+        "holderImage" : "holder.js/293x210?text=Wasp",
+        "image" : "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/5390dfd5ef165.jpg",
+        "description" : "When Janet Van Dyne's father died, she convinced her father's associate Hank Pym to give her a supply of \"Pym particles\"; Pym also subjected her to a procedure which granted her the ability to, upon shrinking, grow wings and fire blasts of energy, which she called her \"wasp's stings.\"",
+        "powers" : "Flight (approx 40 mph), size Reduction (with gain in strength), bio-electric blasts.",
+        "weapons" : "Formerly, wrist stingers. Her stings can now be projected without these mechanical aids."
+    }
+]

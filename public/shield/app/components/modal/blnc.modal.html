@@ -1,0 +1,37 @@
+<div class="modal-body">
+    <h1>Recurring Transaction Details</h1>
+    <div class="shield-data">
+        <!--<p><strong>Company</strong></p>-->
+        <label for="company">Company</label>
+        <input type="text" class="form-control" id="company" value="{{model.details.company}}" ng-model="model.details.company">
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" value="{{model.details.description}}" ng-model="model.details.description">
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="amount">Amount</label>
+        <input type="text" class="form-control" id="amount" value="{{model.details.amount}}" ng-model="model.details.amount">
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="dayOfMonth">Day Of Month</label>
+        <select class="form-control" id="dayOfMonth" ng-model="model.details.recurringDay.dayOfMonth">
+            <option value="0">Select day</option>
+            <option ng-repeat="n in range(31) track by $index" value="{{$index+1}}" ng-selected="selectedValue(model.details.recurringDay.dayOfMonth, $index)">{{$index+1}}</option>
+        </select>
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="recurrence">Recurrence</label>
+        <select class="form-control" id="recurrence">
+            <option ng-repeat="type in model.details.recurringTypes" ng-selected="type.selected" value="{{type.id}}">{{type.value}}</option>
+        </select>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cls()">Cancel</button>
+    <button class="btn btn-success" ng-click="sve()">Save</button>
+</div>

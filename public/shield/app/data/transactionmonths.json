@@ -1,0 +1,59 @@
+[
+    {
+        "userId" : 0,
+        "month" : 11,
+        "monthBalance" : 0,
+        "transactions" : [{
+            "id" : 1,
+            "recurring" : true,
+            "recurringYear" : 2015,
+            "transactionType" : 1,
+            "details" : {
+                "company" : "BMW",
+                "description" : "car payment",
+                "recurringTypes" : [ { "id" : 1, "selected" : false, "symbol" : "D", "value" : "Daily" }, { "id" : 2, "selected" : false, "symbol" : "W", "value" : "Weekly" }, { "id" : 3, "selected" : false, "symbol" : "BW", "value" : "Bi-weekly" }, { "id" : 4, "selected" : true, "symbol" : "M", "value" : "Monthly" } ],
+                "recurringDay" : { "dayOfMonth" : 0, "dayOfWeek" : "" },
+                "amount" : 515.18
+            }
+        },
+        {
+            "id" : 2,
+            "recurring" : true,
+            "recurringYear" : 2015,
+            "transactionType" : 1,
+            "details" : {
+                "company" : "Whiskey Blue",
+                "description" : "weekly chilldown",
+                "recurringTypes" : [ { "id" : 1, "selected" : false, "symbol" : "D", "value" : "Daily" }, { "id" : 2, "selected" : true, "symbol" : "W", "value" : "Weekly" }, { "id" : 3, "selected" : false, "symbol" : "BW", "value" : "Bi-weekly" }, { "id" : 4, "selected" : false, "symbol" : "M", "value" : "Monthly" } ],
+                "recurringDay" : { "dayOfMonth" : 0, "dayOfWeek" : "Th" },
+                "amount" : 30.30
+            }
+        },
+        {
+            "id" : 3,
+            "recurring" : true,
+            "recurringYear" : 2015,
+            "transactionType" : 1,
+            "details" : {
+                "company" : "Starbucks",
+                "description" : "daily fill of caffeine",
+                "recurringTypes" : [ { "id" : 1, "selected" : true, "symbol" : "D", "value" : "Daily" }, { "id" : 2, "selected" : false, "symbol" : "W", "value" : "Weekly" }, { "id" : 3, "selected" : false, "symbol" : "BW", "value" : "Bi-weekly" }, { "id" : 4, "selected" : false, "symbol" : "M", "value" : "Monthly" } ],
+                "recurringDay" : { "dayOfMonth" : 0, "dayOfWeek" : "" },
+                "amount" : 3.30
+            }
+        },
+        {
+            "id" : 4,
+            "recurring" : true,
+            "recurringYear" : 2015,
+            "transactionType" : 2,
+            "details" : {
+                "company" : "Employer",
+                "description" : "paycheck",
+                "recurringTypes" : [ { "id" : 1, "selected" : false, "symbol" : "D", "value" : "Daily" }, { "id" : 2, "selected" : false, "symbol" : "W", "value" : "Weekly" }, { "id" : 3, "selected" : true, "symbol" : "BW", "value" : "Bi-weekly" }, { "id" : 4, "selected" : false, "symbol" : "M", "value" : "Monthly" } ],
+                "recurringDay" : { "dayOfMonth" : 1, "dayOfWeek" : "" },
+                "amount" : 6000
+            }
+        }]
+    }
+]

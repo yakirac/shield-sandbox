@@ -1,0 +1,77 @@
+<div class="container">
+    <div ng-show="blnce.showApp"><a href="#/blnce/user">Settings</a></div>
+    <div>{{blnce.appStatus}}</div>
+    <div id="signin" ng-hide="blnce.showApp">
+        <h1 align="center" style="font-size:60px;">Bln&cent;e</h1>
+        <form class="form-signin">
+          <h4 class="form-signin-heading">{{blnce.errorMessage}}</h4>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="email" class="form-control login" placeholder="Email Address (i.e. user@example.com)" required autofocus>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="password" class="form-control login" placeholder="Password" required>
+          <!--<div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>-->
+          <button class="btn btn-lg btn-primary btn-block login" ng-click="blnce.signin()">Sign In</button>
+           <button class="btn btn-lg btn-link btn-block login" ng-click="blnce.signup()">Create an Account</button>
+        </form>
+    </div>
+    <div id="app-data" ng-show="blnce.showApp">
+        <h1 align="center" style="font-size:60px;">Bln&cent;e</h1>
+
+        <div class="projection-nav">
+            <!--<nav>
+              <ul class="pager">
+                <li><a href="#">Previous</a></li>
+                <li><h3 align="center">$2,000.00</h3></li>
+                <li><h4 align="center">Projected For August</h4></li>
+                <li><a href="#">Next</a></li>
+              </ul>
+          </nav>-->
+          <!--ng-if="!blnce.checkMonth()"-->
+          <div class="previous" ng-show="blnce.allowPreviousMonth"><span class="glyphicon glyphicon-menu-left" style="float:left; line-height: 5;" ng-click="blnce.calculatePreviousMonth()"></span></div>
+          <div class="projection-nums">
+              <h3 align="center">{{blnce.projectedBalance}}</h3>
+              <h4 align="center">Projected For {{blnce.calculatedMonth}} {{blnce.year}}</h4>
+          </div>
+          <div class="next"><span class="glyphicon glyphicon-menu-right" style="float:right; line-height: 5;" ng-click="blnce.calculateNextMonth()"></span></div>
+
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="list-group">
+                    <div ng-repeat="transaction in blnce.transactions | orderBy : '-id'">
+                        <div ng-show="blnce.editMode"><span class="glyphicon glyphicon-minus-sign" id="trans-{{transaction.id}}" ng-click="blnce.setDelete(transaction)"></span></div>
+                        <div class="blnce-list-data" style="width:98%">
+                            <a href="" ng-click="blnce.showModal(transaction)" class="list-group-item">
+                                <div style="display: flex;">
+                                    <div class="company-desc"><strong>{{transaction.details.company}}</strong> - {{transaction.details.description}} <span style="font-size:12px;"><strong>({{blnce.getRecurringTypeSymbol(transaction.details.recurringTypes)}})</strong></span></span></div>
+                                    <div class="trans-blnce" style="">
+                                        <div>
+                                            <span ng-style="blnce.getTransactionStyle(transaction.transactionType)">{{blnce.formatTransactionAmount(transaction.totalMonthlyAmount, transaction.transactionType)}}</span>
+                                            <span class="glyphicon glyphicon-menu-right"></span>
+                                        </div>
+                                        <div class="proj-blnce" style="">
+                                            <span ng-style="blnce.getBalanceStyle(transaction.remainingBalance)">{{transaction.remainingBalance}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-default" ng-click="blnce.showModal()"> <span class="green">+ Add Recurring Transaction</span></button>
+                <button type="button" class="btn btn-default" ng-click="blnce.edit()"> <span id="edit">Edit</span></button>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-default" ng-click="blnce.signout()">Logout</button>
+            </div>
+            <shieldmodal ng-show="blnce.showMdl" model="blnce.transaction" sh="blnce.showMdl" tmpl="blnc" stype="currentMonthTransactions" ctype="transactions"></shieldmodal>
+        </div>
+    </div>
+</div>
