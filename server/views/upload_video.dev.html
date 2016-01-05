@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>YouTube API Uploads via CORS</title>
+    <link rel="stylesheet" href="upload_video.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans' type='text/css'>
+  </head>
+  <body>
+    <span id="signinButton" class="pre-sign-in">
+      <!-- IMPORTANT: Replace the value of the <code>data-clientid</code>
+           attribute in the following tag with your project's client ID. -->
+      <span
+        class="g-signin"
+        data-callback="signinCallback"
+        data-clientid="551670467589-c40si4hcfjipuprrh0lftdau1m02ror9.apps.googleusercontent.com"
+        data-cookiepolicy="single_host_origin"
+        data-scope="https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube">
+      </span>
+    </span>
+
+    <div class="post-sign-in">
+      <div>
+        <img id="channel-thumbnail">
+        <span id="channel-name"></span>
+      </div>
+      <div>
+          <p>Enter a YouTube url, select a video from your device or record a video with your device's camera.</p>
+      </div>
+      <div>
+          <label for="youtube_url_temp">YouTube URL:</label><span id="youtubeurl-error" class="error"></span>
+          <input type="text" id="youtube_url_temp" name="youtube_url_temp" placeholder="YouTube URL">
+      </div>
+      <div>
+        <label for="title">Title:</label>
+        <input id="title" type="text" value="Default Title" placeholder="Title">
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" placeholder="Description">Default description</textarea>
+      </div>
+      <div>
+          <label for="tags">Tags:</label>
+          <input type="text" id="tags" placeholder="separated by commas">
+      </div>
+      <!--<div>
+        <label for="privacy-status">Privacy Status:</label>
+        <select id="privacy-status">
+          <option>public</option>
+          <option>unlisted</option>
+          <option>private</option>
+        </select>
+    </div>-->
+        <input type="hidden" id="video_uploaded" name="video_uploaded" value="0">
+        <input type="hidden" class="video_id" name="video_id" value="">
+
+      <div>
+        <input input type="file" id="file" class="button" accept="video/*">
+        <button id="button">Upload Video</button>
+        <div class="during-upload">
+            <p><span id="percent-transferred"></span>% done (<span id="bytes-transferred"></span>/<span id="total-bytes"></span> bytes)</p>
+            <progress id="upload-progress" max="1" value="0"></progress>
+        </div>
+
+        <div class="post-upload">
+            <p>Uploaded video with id <span id="video-id"></span>. Polling for status...</p>
+            <ul id="post-upload-status"></ul>
+            <div id="player"></div>
+
+            <button id="submit-payment">Submit Payment</button>
+        </div>
+        <p id="disclaimer">By uploading a video, you certify that you own all rights to the content or that you are authorized by the owner to make the content publicly available on YouTube, and that it otherwise complies with the YouTube Terms of Service located at <a href="http://www.youtube.com/t/terms" target="_blank">http://www.youtube.com/t/terms</a></p>
+    </div>
+
+    <!--TODO Get the right version here and include in from a local source-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+    <script src="../../public/lib/jquery.js"></script>
+    <script src="//apis.google.com/js/client:plusone.js"></script>
+    <script src="cors_upload.js"></script>
+    <script src="shield_upload_video.js"></script>
+
+    <script type="text/javascript">
+
+		//Get the auth token from the server
+		function handleClientLoad() {
+			//console.log( 'Handling the client load' );
+			window.setTimeout(checkAuth,1);
+		}
+
+		function checkAuth() {
+			var scopes = 'https://www.googleapis.com/auth/youtube';
+			var apiKey = 'AIzaSyAeoUNRyZKxrGPactqhgccaIxVTlImKGH4';
+			gapi.client.setApiKey(apiKey);
+			jQuery.ajax({
+				url : '../upload_video.php?method=get_auth',
+				type : 'GET',
+				dataType : 'json'
+			}).done(function( data ){
+				if( data.status == 'error' )
+				{
+					jQuery('#upload_unavailable').show();
+					jQuery('#upload_section').hide();
+				}
+				else
+				{
+					jQuery('#upload_section').show();
+					var token_info = JSON.parse( data.token_info );
+					gapi.auth.setToken( { access_token : token_info.access_token, expires_in : token_info.expires_in, state : scopes } );
+					var uploadVideo = new UploadVideo();
+					uploadVideo.ready( token_info.access_token );
+				}
+			});
+		}
+
+	</script>
+	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+	<!--<br><br><iframe id="user-vid" width="307" height="170" src="" frameborder="0" allowfullscreen style="display:none;"></iframe>-->
+	<script type="text/javascript">
+		jQuery('#youtube_url_temp').on('blur', function( e ){
+            console.log( 'Validating' );
+            var yurl = jQuery('#youtube_url_temp').val();
+			if( yurl != '' )
+			{
+				jQuery.post('../validate.php?action=url', { 'youtube_url_temp' : yurl }).done( function( data ){
+					var responseData = JSON.parse( data );
+					if( responseData.status == 'error' )
+					{
+						jQuery( '#youtube_url_temp' ).val('');
+						jQuery( '#youtubeurl-error' ).html( responseData.response ).show();
+                        //jQuery( '.errors' ).html( responseData.response ).show();
+						//jQuery('#user-vid').hide();
+					}
+					else
+					{
+						jQuery( '#youtubeurl-error' ).hide();
+						//jQuery( '.errors' ).hide();
+						jQuery( '#video_id' ).val( responseData.id );
+						//jQuery('#user-vid').prop( 'src', responseData.youtubeURL );
+						//jQuery('#user-vid').show();
+					}
+				});
+			}
+		});
+
+	</script>
+    <!--TODO Fix this by including the file from a local source-->
+	<!--<script src="https://checkout.stripe.com/checkout.js"></script>-->
+	<script type="text/javascript">
+		/*var handler = StripeCheckout.configure({
+			key: 'pk_live_Ou8zba6egY8L9XZWHCZETnwQ',//'pk_test_0jqPr3eO3KSDsMDyAbMW6cm8',
+			allowRememberMe: false,
+			image: '',
+			token: function(token) {
+			// Use the token to create the charge with a server-side script.
+			// You can access the token ID with `token.id`
+				var data = { "payment_token" : "" + token.id + "" };
+				var yid = jQuery('#video_id').val();
+				jQuery.ajax({
+					url: '/server/process_payment.php?payment_token=' + token.id + '&yid=' + yid,
+					type: 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function( data )
+					{
+						alert( 'Success: ' + data);
+					},
+					error : function( error )
+					{
+						alert( 'There was an error processing payment. Please make sure all fields are filled in with valid data.' );
+						//console.log( error );
+					}
+				});
+			}
+		});
+
+        jQuery('#submit-payment').on('click', function(e) {
+
+            handler.open({
+                name: 'SHIELD',
+                description: 'Test Payments',
+                amount: 200
+            });
+        });
+
+        jQuery(window).on('popstate', function() {
+			handler.close();
+		});*/
+    </script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+{
+"access_token":"ya29.fgEikMldnuCEkJyXNfmTDvUMbtr_qlSTVDHPm67iPaVC9TdR7XLwhoA0L7b1iSAlbM2QI8PzEVeVEQ",
+"token_type":"Bearer",
+"expires_in":3600,
+"refresh_token":"1\/2_g_7lQpw1eEvaDcXxU9mrx-BpYlsfgQVGNsLpVAhWMMEudVrK5jSpoR30zcRFq6",
+"created":1432555814
+}
