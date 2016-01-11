@@ -35,6 +35,9 @@
     "restangular": "~1.5.1",
     "bootstrap-css": "~3.3.4",
     "angular-bootstrap": "~0.13.0",
-    "angular-momentjs": "~0.2.2"
+    "angular-momentjs": "~0.2.2",
+    "holderjs": "~2.9.0",
+    "angular-holderjs": "~1.1.0",
+    "parse": "~1.6.13"
   }
 }
