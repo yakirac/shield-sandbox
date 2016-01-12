@@ -9,7 +9,7 @@
 			templateUrl: "shield/app/routes/blnce/blnce.html",
 			controller: "blnceController",
 			controllerAs: "blnce"
-		}).state("blnce/user", {
+		}).state("user", {
 			url: "/blnce/user",
 			templateUrl: "shield/app/routes/blnce/blnce.user.html",
 			controller: "blnceUserController",
