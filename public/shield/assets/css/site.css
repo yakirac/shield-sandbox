@@ -61,6 +61,47 @@ header{
 }
 /* BLNCE STYLES */
 
+.blnce-nav{
+	list-style: outside;
+}
+.blnce-nav > li{
+	display: inline-block;
+	position: relative;
+}
+.blnce-nav > li + li{
+	margin-left: 20px;
+}
+
+.blnce-nav > li > a{
+	color: #000;
+}
+
+.blnce-nav > li > a:hover{
+	text-decoration: none;
+	color: #39dbac;
+}
+
+div#home-content-header{
+	padding:30px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+div#home-content-header p{
+	text-align: center;
+}
+
+div#info-content .row{
+	padding: 40px 0px;
+}
+
+div#info-content .col-lg-6{
+	text-align: center;
+}
+
+div#info-content .col-lg-6 h4{
+	padding-top: 15px;
+}
+
 .login, .settings{
 	margin-bottom: 5px;
 }
@@ -126,6 +167,15 @@ span.glyphicon.glyphicon-minus-sign:hover{
 		width: 5%;
 		line-height: 5;
 		cursor: pointer;
+	}
+}
+@media screen and (max-width: 1200px) {
+	div#info-content .col-lg-6{
+		padding-bottom: 65px;
+	}
+
+	div#info-content .row{
+		padding: 10px 0px;
 	}
 }
 
@@ -203,7 +253,8 @@ footer a {
 
 footer a:hover {
 	text-decoration: none;
-	color: #DF0101;
+	/*color: #DF0101;*/
+	color: #e5e5e5;
 }
 
 footer div.fContent{

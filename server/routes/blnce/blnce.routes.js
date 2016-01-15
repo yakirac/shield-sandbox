@@ -1,7 +1,6 @@
 (function() {
 	"use strict";
 
-	//mongoose
 	var blnceUserService = require('./blnce.user.service');
 	var blnceTransactionsService = require('./blnce.transactions.service');
 	var plaid = require('plaid');
@@ -31,57 +30,19 @@
 		//Expecting a username and password to be provided
 		app.post('/blnce/login', function(req, res){
 			//Log the user in creating an auth token
-			var response = blnceUserService.loginUser( req.body );
-
-			if( _.isUndefined( response.status) )
-			{
-				response.then(function(re){
-					var resp = { status : 'success', message : 'User is now logged in', user : { id : re._id } };
-					if( _.isUndefined( re.status ) )
-					{
-						res.set('X-Auth-Token', re.token);
-						res.status(200).json({ "result" : "Log In User", "response" : resp });
-					}
-					else res.status(404).json({ "result" : "Log In User", "response" : re });
-				});
-			}
-			else res.status(400).json({ "result" : "Log In User", "response" : response });
-
+			blnceUserService.loginUser( req.body, res );
 		});
 
 		app.post('/blnce/register', function(req, res){
 			//register the user
-			var response = blnceUserService.registerUser( req.body );
-			if( _.isUndefined(response.status) )
-			{
-				response.then( function(re){
-					var resp = { status : 'success', message : 'New user registered', user : { id : re._id } };
-					if( _.isUndefined( re.status ) )
-					{
-						res.set('X-Auth-Token', re.token);
-						res.status(200).json({ "result" : "Register New User", "response" : resp });
-					}
-					else res.status(404).json({ "result" : "Register New User", "response" : re });
-				});
-			}
-			else res.status(400).json({ "result" : "Register New User", "response" : response });
-
+			blnceUserService.registerUser( req.body, res );
 		});
 
 		//Log the user out of blnce
 		app.post('/blnce/logout', function(req, res){
 			//Logout the user
 			var authToken = req.headers['x-auth-token'];
-			var response = blnceUserService.logoutUser(authToken);
-			response.then( function(re){
-				var resp = { status : 'success', message : 'The user has been successfully logged out', user : [] };
-				if( _.isUndefined( re.status ) )
-				{
-					res.set('X-Auth-Token', '');
-					res.status(200).json({ "result" : "Log Out User", "response" : resp });
-				}
-				else res.status(404).json({ "result" : "Log Out User", "response" : re });
-			});
+			blnceUserService.logoutUser( authToken, res );
 		});
 	}
 
@@ -106,87 +67,50 @@
 
 	function setTransactionRoutes(app)
 	{
+		/*** ALL TRANSACTIONS ***/
 		//Get all the transactions
 		app.get('/blnce/transactions', function(req, res){
 			var data = { authToken : req.headers['x-auth-token'] };
 			//get the transactions
-			var response = blnceTransactionsService.getAllUserTransactions( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'Transactions retrieved successfully', transactions : re };
-					res.status(200).json({ "result" : "Get Transactions", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Get Transactions", "response" : re });
-			});
+			blnceTransactionsService.getAllUserTransactions( data, res );
 		});
+
+		/*** MONTH TRANSACTIONS ***/
 
 		//Get the transactions for a month
 		app.get('/blnce/transactions/:month', function(req, res){
 			var data = { month : req.params.month, authToken : req.headers['x-auth-token'] };
 			//get the transactions
-			var response = blnceTransactionsService.getMonthTransactions( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'Transactions retrieved successfully', transactions : re };
-					res.status(200).json({ "result" : "Get Month Transactions", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Get Month Transactions", "response" : re });
-			});
-		});
-
-		//Get a single transaction for a month
-		app.get('/blnce/transactions/:month/:id', function(req, res){
-			var data = { month : req.params.month, id : req.params.id, authToken : req.headers['x-auth-token'] };
-			//get the transaction
-			var response = blnceTransactionsService.getMonthTransaction( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'Transaction retrieved successfully', transactions : re };
-					res.status(200).json({ "result" : "Get Transaction", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Get Transaction", "response" : re });
-			});
+			blnceTransactionsService.getMonthTransactions( data, res );
 		});
 
 		//Save the new transaction to the month's transactions
 		app.post('/blnce/transactions/:month', function(req, res){
-			var data = { month : req.params.month, authToken : req.headers['x-auth-token'] };
+			var data = { month : req.params.month, transaction : req.body, authToken : req.headers['x-auth-token'] };
 			//Save the transaction to the month
-			var response = blnceTransactionsService.addMonthTransaction( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'Transaction added successfully', transaction : re };
-					res.status(200).json({ "result" : "Add New Month Transaction", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Add New Month Transaction", "response" : re });
-			});
+			blnceTransactionsService.addMonthTransaction( data, res );
 		});
 
 		//Update the the month's transactions
 		app.put('/blnce/transactions/:month', function(req, res){
 			var data = { month : req.params.month, monthTransactions : req.body, authToken : req.headers['x-auth-token'] };
 			//Save the transaction updates
-			var response = blnceTransactionsService.saveMonthTransactions( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'Transactions saved successfully', transaction : re };
-					res.status(200).json({ "result" : "Save Month Transactions", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Save Month Transactions", "response" : re });
-			});
+			blnceTransactionsService.saveMonthTransactions( data, res );
+		});
+
+		/*** SINGLE MONTH TRANSACTION ***/
+
+		//Get a single transaction for a month
+		app.get('/blnce/transactions/:month/:id', function(req, res){
+			var data = { month : req.params.month, id : req.params.id, authToken : req.headers['x-auth-token'] };
+			//get the transaction
+			blnceTransactionsService.getMonthTransaction( data, res );
 		});
 
 		//Delete a single transaction for a month
 		//IMPLEMENT LATER. Right now the saving scheme does not call for this.
 		/*app.delete('/blnce/transactions/:month/:id', function(req, res){
 			//Delete transaction
-
-			res.json({ "result" : "Deleted"});
 		});*/
 	}
 
@@ -195,29 +119,13 @@
 		app.get('/blnce/user/:id', function(req, res){
 			//get the user
 			var data = { userId : req.params.id, authToken : req.headers['x-auth-token'] };
-			var response = blnceUserService.getUser( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'User retrieved successfully', settings : re };
-					res.status(200).json({ "result" : "Get User", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Get User", "response" : re });
-			});
+			blnceUserService.getUser( data, res );
 		});
 
 		app.put('/blnce/user/:id', function(req, res){
 			//update the data
 			var data = { userId : req.params.id, user : req.body, authToken : req.headers['x-auth-token'] };
-			var response = blnceUserService.saveUser( data );
-			response.then( function(re){
-				if( _.isUndefined( re.status ) )
-				{
-					var resp = { status : 'success', message : 'User saved successfully', settings : re };
-					res.status(200).json({ "result" : "Save User", "response" : resp });
-				}
-				res.status(500).json({ "result" : "Save User", "response" : re });
-			});
+			blnceUserService.saveUser( data, res );
 		});
 
 	}

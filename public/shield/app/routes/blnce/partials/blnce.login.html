@@ -1,0 +1,14 @@
+<div class="container">
+    <div id="signin">
+        <h1 align="center" style="font-size:60px;">Bln&cent;e</h1>
+        <form class="form-signin">
+          <h4 class="form-signin-heading">{{blnce.errorMessage}}</h4>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="email" class="form-control login" placeholder="Email Address (i.e. user@example.com)" required autofocus>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="password" class="form-control login" placeholder="Password" required>
+          <button class="btn btn-lg btn-primary btn-block login" ng-click="blnce.signin()">Sign In</button>
+           <button class="btn btn-lg btn-link btn-block login" ng-click="blnce.signup()">Create an Account</button>
+        </form>
+    </div>
+</div>

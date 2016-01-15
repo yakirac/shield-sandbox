@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
-	angular.module("app.shield.blnce").controller("blnceController", [ "$scope", "$timeout", "$filter", "blnceService", "localStorageService", "appStatusService", "$moment", fnController ]);
-	function fnController( $scope, $timeout, $filter, blnceService, localStorageService, AppStatusService, $moment ) {
+	angular.module("app.shield.blnce").controller("blnceController", [ "$scope", "$state", "$timeout", "$filter", "blnceService", "localStorageService", "appStatusService", "$moment", fnController ]);
+	function fnController( $scope, $state, $timeout, $filter, blnceService, localStorageService, AppStatusService, $moment ) {
 		var blnce = this;
 		var u = blnceService.getCurrentUser();
 		blnce.showApp = !_.isNull( u ) && !_.isUndefined( u ) ? true : false;
@@ -46,6 +46,7 @@
 					blnce.projectedBalance = $filter( 'currency' )( blnceService.getProjectedBalance() );
 					blnce.showApp = true;
 					blnce.errorMessage = '';
+					$state.go( 'blnce.home' );
 				}, function( error ){
 					cl( error );
 					blnce.errorMessage = error.data.response.message;
@@ -74,6 +75,7 @@
 					blnceService.setCurrentUser( currentBlnceUser );
 					loadTransactions();
 					blnce.errorMessage = '';
+					$state.go( 'blnce.home' );
 				}, function( error ) {
 					//alert( 'We were not able to create the user : ' +  error.message );
 					blnce.errorMessage = error.data.response.message;
@@ -88,6 +90,7 @@
 				blnceService.setCurrentUser( null );
 				blnce.showApp = false;
 				blnce.errorMessage = '';
+				$state.go( 'blnce' );
 			}, function( error ) {
 				//alert( 'We were not able to log you out : ' + error.message );
 				blnce.errorMessage = error.data.response.message;
@@ -135,7 +138,7 @@
 
 		blnce.reload = function( fromModal, differentMonth ) {
 			if( fromModal ) {
-				cl( localStorageService.get('currentMonthTransactions') );
+				//cl( localStorageService.get('currentMonthTransactions') );
 				updateTransactions();
 				$timeout(function () {
 					setReloadTransactionData( differentMonth );

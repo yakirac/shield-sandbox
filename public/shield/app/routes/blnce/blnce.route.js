@@ -9,9 +9,15 @@
 			templateUrl: "shield/app/routes/blnce/blnce.html",
 			controller: "blnceController",
 			controllerAs: "blnce"
-		}).state("user", {
-			url: "/blnce/user",
-			templateUrl: "shield/app/routes/blnce/blnce.user.html",
+		}).state("blnce.login", {
+			url: "/login",
+			templateUrl: "shield/app/routes/blnce/partials/blnce.login.html",
+		}).state("blnce.home", {
+			url: "/home",
+			templateUrl: "shield/app/routes/blnce/partials/blnce.home.html",
+		}).state("blnce.user", {
+			url: "/user",
+			templateUrl: "shield/app/routes/blnce/partials/blnce.user.html",
 			controller: "blnceUserController",
 			controllerAs: "blnceUser"
 		});

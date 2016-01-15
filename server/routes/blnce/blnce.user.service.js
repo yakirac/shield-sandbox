@@ -14,7 +14,7 @@
 
     //USER SERVICES
 
-	function fnValidateUser( username, password )
+	function validateUser( username, password )
 	{
 		if( _.isEmpty( username ) && _.isEmpty( password ) ) return 'The credentials entered were invalid';
 		if( _.isEmpty( username ) ) return 'Please provide a valid email address';
@@ -23,7 +23,7 @@
 		return true;
 	}
 
-	function fnGenerateAuthToken()
+	function generateAuthToken()
 	{
 		var authToken = '';
 		var charString = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -35,103 +35,117 @@
 		return authToken;
 	}
 
-    function fnLoginUser(request)
-    {
-		var isValidLogin = fnValidateUser( request.username, request.password );
-
-		if( isValidLogin === true )
-		{
-			var query = User.findOne({ username : request.username, password : request.password });
-			return query.exec().then(function(user){
-				if( !_.isEmpty(user) )
-				{
-					user.token =  fnGenerateAuthToken();
-					if( _.isUndefined(user.notificationSettings.email) ) user.notificationSettings = { email : false };
-					return user.save();
-				}else {
-					return { status : 'error', message : 'The user you are trying to login as could not be found. Please check your credentials.', user : user };
-				}
-			});
-		}
-		else return { status : 'error', message : isValidLogin };
-
-		//return the user auth token
-    }
-
-	function fnRegisterUser(request)
+	function sendDatabaseResponse( err, responseData )
 	{
-		var createdUser;
-		var isValidLogin = fnValidateUser( request.username, request.password );
-
-		//Create a new user and add them to the db
-		if( isValidLogin === true )
-		{
-			var query = User.findOne({ username : request.username, password : request.password });
-			return query.exec().then(function(user){
-				if( _.isEmpty(user) )
-				{
-					var authToken = fnGenerateAuthToken();
-					var newUser = new User({ username : request.username, password : request.password, token : authToken });
-					return newUser.save();
-				}else {
-					return { status : 'error', message : 'A user with these credentials already exists. Please choose a new email address and password combination.', user : user };
-				}
-			});
-		}
-		else return { status : 'error', message : isValidLogin };
-		//return the new user and a new authtoken
+		var tokenActions = ['Log In User', 'Register New User', 'Log Out User'];
+		var userActions = ['Get User', 'Save User'];
+		if( err ) return handleResponse({ res : this.res, status : 400, action : this.action, message : err.message, data : this.data });
+		if( _.contains(tokenActions, this.action) ) this.res.set('X-Auth-Token', responseData.token);
+		if( this.action == 'Register New User' ) this.data.user.id = responseData._id;
+		if( _.contains(userActions, this.action ) ) this.data.settings = responseData;
+		handleResponse({ res : this.res, status : 200, action : this.action, message : this.message, data : this.data });
 	}
 
-    function fnLogoutUser(authtoken)
+	function handleResponse( responseData )
+	{
+		var response = _.extend({}, { status : responseData.status, message : responseData.message }, responseData.data );
+		responseData.res.status( responseData.status ).json({ "action" : responseData.action, "response" : response });
+	}
+
+    function fnLoginUser( request, res )
     {
-        //log the user out
-		var query = User.findOne({ token : authtoken });
-		return query.exec().then( function(user){
-			if( !_.isEmpty(user) )
+		var isValidLogin = validateUser( request.username, request.password );
+
+		if( isValidLogin !== true )
+		{
+			handleResponse( { res : res, status : 400, action : 'Log In User', message : isValidLogin, data : {} } );
+			return;
+		}
+		var query = User.findOne({ username : request.username, password : request.password });
+		query.exec().then(function(user){
+			if( _.isEmpty( user ) )
 			{
-				//Set the token to empty for the user
-				user.token = '';
-				return user.save();
+				handleResponse( { res : res, status : 404, action : 'Log In User', message : 'The user you are trying to login as could not be found. Please check your credentials.', data : { user : user } } );
+				return;
 			}
-			else {
-				return { status : 'error', message : 'User not found' };
-			}
+			user.token = generateAuthToken();
+			if( _.isUndefined(user.notificationSettings.email) ) user.notificationSettings = { email : false };
+			user.save( sendDatabaseResponse.bind({ res : res, action : 'Log In User', message : 'User is now logged in', data : { user : { id : user._id } } }) );
 		});
     }
 
-	function fnIsAuthorized( authToken )
+	function fnRegisterUser( request, res )
+	{
+		var isValidLogin = validateUser( request.username, request.password );
+
+		if( isValidLogin !== true )
+		{
+			handleResponse( { res : res, status : 400, action : 'Register New User', message : isValidLogin, data : {} } );
+			return;
+		}
+		var query = User.findOne({ username : request.username, password : request.password });
+		query.exec().then(function(user){
+			if( !_.isEmpty( user ) )
+			{
+				handleResponse( { res : res, status : 400, action : 'Register New User', message : 'A user with these credentials already exists. Please choose a new email address and password combination.', data : { user : user } } );
+				return;
+			}
+			var authToken = generateAuthToken();
+			var newUser = new User({ username : request.username, password : request.password, token : authToken });
+			newUser.save( sendDatabaseResponse.bind({ res : res, action : 'Register New User', message : 'New user registered', data : { user : { id : 0 } } }) );
+		});
+	}
+
+    function fnLogoutUser( authtoken, res )
+    {
+        //log the user out
+		var query = User.findOne({ token : authtoken });
+		query.exec().then( function(user){
+			if( _.isEmpty(user) )
+			{
+				handleResponse( { res : res, status : 404, action : 'Log Out User', message : 'User not found', data : {} });
+				return;
+			}
+			//Set the token to empty for the user
+			user.token = '';
+			user.save( sendDatabaseResponse.bind({ res : res, action : 'Log Out User', message : 'The user has been successfully logged out', data : { user : [] } }) );
+		});
+    }
+
+	function isAuthorized( authToken )
     {
         var query = User.findOne({ token : authToken });
         return query.exec();
     }
 
-    function fnGetUser(data)
+    function fnGetUser( data, res )
     {
-		return fnIsAuthorized( data.authToken ).then(function( user ){
-            if( !_.isEmpty(user) )
+		isAuthorized( data.authToken ).then(function( user ){
+            if( _.isEmpty(user) )
             {
-				var query = User.findOne({ "_id" : mongoose.Types.ObjectId(data.userId) });
-        		return query.exec();
+				handleResponse( { res : res, status : 403, action : 'Get User', message : 'This user is not authorized to access this content. Please login.', data : {} });
+				return;
             }
-            else return { status : 'error', message : 'This user is not authorized to access this content. Please login.' };
+			var query = User.findOne({ "_id" : mongoose.Types.ObjectId(data.userId) });
+			query.exec( sendDatabaseResponse.bind({ res : res, action : 'Get User', message : 'User retrieved successfully', data : { settings : {} } }) );
         });
     }
 
-    function fnSaveUser(data)
+    function fnSaveUser( data, res )
     {
         //save the user
-		return fnIsAuthorized( data.authToken ).then(function( user ){
-            if( !_.isEmpty(user) )
+		isAuthorized( data.authToken ).then(function( user ){
+            if( _.isEmpty(user) )
             {
-				var ObjectId = mongoose.Types.ObjectId;
-				return User.update({ "_id" : mongoose.Types.ObjectId(data.userId) }, data.user );
+				handleResponse( { res : res, status : 403, action : 'Save User', message : 'This user is not authorized to access this content. Please login.', data : {} });
+				return;
             }
-            else return { status : 'error', message : 'This user is not authorized to access this content. Please login.' };
+			var ObjectId = mongoose.Types.ObjectId;
+			User.update( { "_id" : mongoose.Types.ObjectId(data.userId) }, data.user,  sendDatabaseResponse.bind({ res : res, action : 'Save User', message : 'User saved successfully', data : { settings : {} } }) );
         });
-        //return the save confirmation
     }
 
-	function fnDeleteUser(data)
+	function fnDeleteUser( data, res )
     {
         //delete the user
         //return the deletion confirmation
