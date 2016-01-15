@@ -78,7 +78,12 @@ header{
 
 .blnce-nav > li > a:hover{
 	text-decoration: none;
-	color: #39dbac;
+	color: #36B7AA;
+}
+
+.blnce-nav ul.dropdown-menu{
+	left: auto;
+	right: 0;
 }
 
 div#home-content-header{
