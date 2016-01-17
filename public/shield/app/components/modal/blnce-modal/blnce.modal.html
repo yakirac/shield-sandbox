@@ -26,7 +26,7 @@
     <div class="shield-data">
         <!--<p><strong>Amount</strong></p>-->
         <label for="recurrence">Recurrence</label>
-        <select class="form-control" id="recurrence">
+        <select class="form-control" id="recurrence" ng-model="selected_recurrence">
             <option ng-repeat="type in model.details.recurringTypes" ng-selected="type.selected" value="{{type.id}}">{{type.value}}</option>
         </select>
     </div>

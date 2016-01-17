@@ -10,7 +10,7 @@
             <div class="row">
                 <h4>Profile</h4>
                 <form class="form-usersettings">
-                  <h4 class="form-signin-heading">{{blnceUser.errorMessage}}</h4>
+                  <h4 class="form-signin-heading" ng-cloak>{{blnceUser.errorMessage}}</h4>
                   <label for="inputUsername" class="sr-only">Name(optional)</label>
                   <input type="text" id="name" class="form-control settings" ng-model="userSettings.name" placeholder="Name(optional)" autofocus>
                   <label for="inputEmail" class="sr-only">Email address</label>

@@ -31,28 +31,27 @@
 	}
 	//the controller
 	function fnController( $scope, heroService ){
-		var vm = this;
-		vm.hero = $scope.hero;
-		vm.showImage = false;
-		vm.showPlaceholder = true;
-		vm.showHeroImage = showHeroImage;
-		vm.hideHeroImage = hideHeroImage;
-		vm.showHeroInfoModal = showHeroInfoModal;
+		$scope.hero = $scope.hero;
+		$scope.showImage = false;
+		$scope.showPlaceholder = true;
+		$scope.showHeroImage = showHeroImage;
+		$scope.hideHeroImage = hideHeroImage;
+		$scope.showHeroInfoModal = showHeroInfoModal;
 
 		function showHeroImage(){
 			//cl( 'Showing' );
-			vm.showImage = true;
-			vm.showPlaceholder = false;
+			$scope.showImage = true;
+			$scope.showPlaceholder = false;
 		}
 
 		function hideHeroImage(){
 			//cl( 'Hiding' );
-			vm.showImage = false;
-			vm.showPlaceholder = true;
+			$scope.showImage = false;
+			$scope.showPlaceholder = true;
 		}
 
 		function showHeroInfoModal( hero ){
-			$scope.$parent.vm.showHeroInfoModal( hero );
+			$scope.$emit('characters:showmodal', hero);
 		}
 	}
 })();

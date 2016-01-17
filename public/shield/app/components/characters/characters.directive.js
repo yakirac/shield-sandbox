@@ -21,34 +21,34 @@
 	//the directive
 	function fnDirective(){
 		return{
-			'restrict':"AE",
-			'replace': false,
-			'templateUrl': "shield/app/components/characters/characters.html",
-			'controller': "charactersController",
-			'controllerAs': "vm"
+			restrict:"AE",
+			replace: false,
+			templateUrl: "shield/app/components/characters/characters.html",
+			controller: "charactersController",
+			controllerAs: "vm"
 		};
 	}
 	//the controller
 	function fnController( $scope, heroService ){
-		var vm = this;
+		$scope.sh = false;
+		$scope.hero = '';
 
-		vm.sh = false;
-		vm.hero = '';
-
-		vm.heros = [];
+		$scope.heros = [];
 		heroService.getHeros().then(function( data ){
-			vm.heros = data.data;
+			$scope.heros = data.data;
 			//cl( vm.heros );
 		}, function( error ){
 			cl( error );
 		});
 
-		vm.showHeroInfoModal = function( hero )
+		$scope.$on( 'characters:showmodal', showHeroInfoModal );
+
+		function showHeroInfoModal( event, hero )
 		{
 			//cl( hero );
-			vm.sh = true;
-			vm.tmpl = 'mmu';
-			vm.hero = hero;
+			$scope.sh = true;
+			$scope.tmpl = 'mmu';
+			$scope.hero = hero;
 		};
 	}
 })();

@@ -136,15 +136,23 @@
 	        }};
 		};
 
-		blnce.reload = function( fromModal, differentMonth ) {
-			if( fromModal ) {
+		$scope.$on( 'blnce:reload', reloadModalUpdates );
+
+		function reloadModalUpdates( event, data )
+		{
+			data.year = blnce.year;
+			blnce.reload( data );
+		}
+
+		blnce.reload = function( data ) {
+			if( data.fromModal ) {
 				//cl( localStorageService.get('currentMonthTransactions') );
 				updateTransactions();
 				$timeout(function () {
-					setReloadTransactionData( differentMonth );
+					setReloadTransactionData( data );
 				}, 10);
 			} else {
-				setReloadTransactionData( differentMonth );
+				setReloadTransactionData( data );
 			}
 		};
 
@@ -196,8 +204,8 @@
 
 			updateTransactions();
 
-			var calculationData = { direction : 0, month : blnce.currentMonthCalculating, year : blnce.year, currentMonth : blnce.checkMonth() };
-			blnce.reload( false, calculationData );
+			var calculationData = { fromModal : false, direction : 0, month : blnce.currentMonthCalculating, year : blnce.year, currentMonth : blnce.checkMonth() };
+			blnce.reload( calculationData );
 		};
 
 		blnce.calculateNextMonth = function() {
@@ -209,8 +217,8 @@
 
 			updateTransactions();
 
-			var calculationData = { direction : 1, month : blnce.currentMonthCalculating, year : blnce.year, currentMonth : blnce.checkMonth() };
-			blnce.reload( false, calculationData );
+			var calculationData = { fromModal : false, direction : 1, month : blnce.currentMonthCalculating, year : blnce.year, currentMonth : blnce.checkMonth() };
+			blnce.reload( calculationData );
 		};
 
 		blnce.checkMonth = function() {
@@ -246,8 +254,8 @@
 			//localStorageService.set( 'transactions', blnce.transactions );
 			blnceService.updateTransactions();
 
-			var calculationData = { month : blnce.currentMonthCalculating, year : blnce.year, currentMonth : blnce.checkMonth() };
-			blnce.reload( false, calculationData );
+			var calculationData = { fromModal : false, month : blnce.currentMonthCalculating, year : blnce.year, currentMonth : blnce.checkMonth() };
+			blnce.reload( calculationData );
 		}
 
 		//"recurringTypes" : { "1" : false, "2" : false, "3" : true }

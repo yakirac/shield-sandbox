@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
-        <character ng-repeat="hero in vm.heros" hero="hero"></character>
+        <character ng-repeat="hero in heros" hero="hero"></character>
     </div>
-    <shieldmodal ng-show="vm.sh" model="vm.hero" sh="vm.sh" tmpl="mmu"></shieldmodal>
+    <shieldmodal ng-show="sh" model="hero" sh="sh" modal="mmu"></shieldmodal>
 </div>
 <br>
 <a href="http://marvel.com">Data provided by Marvel. © 2015 Marvel</a>
