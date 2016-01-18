@@ -1,6 +1,6 @@
 (function() {
 	"use strict";
-    angular.module("app.core").controller( "blnceModalController", [ "$scope", "$modalInstance", "modelInfo", "localStorageService", fnModalController ] );
+    angular.module("app.core").controller( "blncetransModalController", [ "$scope", "$modalInstance", "modelInfo", "localStorageService", fnModalController ] );
 
 	function fnModalController( $scope, $modalInstance, modelInfo, localStorageService ){
 		$scope.model = modelInfo.model;
@@ -9,7 +9,8 @@
         $scope.selected_recurrence = getSelectedValue( 'recurringTypes' );
 
 		$scope.cls = function(){
-			modelInfo.parentScope.sh = false;
+			//modelInfo.parentScope.sh = false;
+			modelInfo.parentScope.$emit( 'blnceUser:updateshowmodal', false );
 			$modalInstance.dismiss('cancel');
 		};
 
@@ -33,7 +34,8 @@
 			if( modelInfo.stype && modelInfo.ctype ) sCollection[ modelInfo.ctype ] = collection;
 			localStorageService.set( modelInfo.stype, modelInfo.stype && modelInfo.ctype ? sCollection : collection );
 
-			modelInfo.parentScope.sh = false;
+			//modelInfo.parentScope.sh = false;
+			modelInfo.parentScope.$emit( 'blnceUser:updateshowmodal', false );
 			$modalInstance.dismiss('cancel');
             modelInfo.parentScope.$emit( 'blnce:reload', { fromModal : true, month : sCollection.month, year : sCollection.year } );
 		};

@@ -1,0 +1,35 @@
+<div class="modal-body">
+    <h4>{{errorMessage}}</h4>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="institution">Bank</label>
+        <select class="form-control" id="institution" ng-model="model.authDetails.type" ng-change="updateFields()">
+            <option value="0" ng-selected="true">Select Your Bank</option>
+            <option ng-repeat="institution in model.institutions" value="{{institution.type}}">{{institution.name}}</option>
+        </select>
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="account-name">Account Name</label>
+        <input type="text" class="form-control" id="account-name" value="{{model.authDetails.accountName}}" ng-model="model.authDetails.accountName" required>
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="username">{{fields.username}}</label>
+        <input type="text" class="form-control" id="username" value="{{model.authDetails.credentials.username}}" ng-model="model.authDetails.credentials.username" required>
+    </div>
+    <div class="shield-data">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="password">{{fields.password}}</label>
+        <input type="password" class="form-control" id="password" value="{{model.authDetails.credentials.password}}" ng-model="model.authDetails.credentials.password" required>
+    </div>
+    <div class="shield-data" ng-show="showPin">
+        <!--<p><strong>Amount</strong></p>-->
+        <label for="pin">{{fields.pin}}</label>
+        <input type="password" class="form-control" id="pin" value="{{model.authDetails.credentials.pin}}" ng-model="model.authDetails.credentials.pin" required>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cls()">Cancel</button>
+    <button class="btn btn-success" ng-click="sve()">{{saveText}}</button>
+</div>

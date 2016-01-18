@@ -3,20 +3,15 @@
 
 	var blnceUserService = require('./blnce.user.service');
 	var blnceTransactionsService = require('./blnce.transactions.service');
-	var plaid = require('plaid');
+	var blncePlaidService = require('./blnce.plaid.service');
 	var _ = require('lodash');
-	var config = require('../../configs/config');
 	var db = require('../../configs/db');
-
-	var plaid_env = plaid.environments[config.plaid_env];
-
-	var currentUser;
 
 	function setBlnceRoutes(app)
 	{
 
 		setBlnceAccessRoutes(app);
-		setGeneralDataRoutes(app);
+		setPlaidDataRoutes(app);
 		setTransactionRoutes(app);
 		setBlnceUserRoutes(app);
 
@@ -46,22 +41,35 @@
 		});
 	}
 
-	function setGeneralDataRoutes(app)
+	function setPlaidDataRoutes(app)
 	{
-		//Get the bank institutions available to connect to
-		app.get('/blnce/institutions', function(req, res){
-			//Get Institutions
-			/*plaid.getInstitutions( plaid_env, function( error, result ){
-				res.json({ "id" : 2, "plaid" : result, "config.plaid_env" : config.plaid_env });
-			});*/
-		});
-
 		//Get the possible categories for transactions
 		app.get('/blnce/categories', function(req, res){
 			//Get Categories
-			/*plaid.getCategories( plaid_env, function( error, result ){
-				res.json({ "id" : 2, "plaid" : result });
-			});*/
+			blncePlaidService.getPlaidCategories( res );
+		});
+
+		//Get the bank institutions available to connect to
+		app.get('/blnce/institutions', function(req, res){
+			//Get Institutions
+			blncePlaidService.getPlaidInstitutions( res );
+		});
+
+		app.get('/blnce/institutions/longtail', function(req, res){
+			//Get Institutions
+			blncePlaidService.getPlaidInstitutionsLongtail( res );
+		});
+
+		app.post('/blnce/connect-account', function(req, res){
+			//Start the process to add a new bank account for the user
+			var data = { authDetails : req.body, authToken : req.headers['x-auth-token'] };
+			blncePlaidService.addPlaidConnectUser( data, res );
+		});
+
+		app.post('/blnce/connect-verify-account', function(req, res){
+			//Start the process to add a new bank account for the user
+			var data = { authDetails : req.body, authToken : req.headers['x-auth-token'] };
+			blncePlaidService.resolveMFA( data, res );
 		});
 	}
 

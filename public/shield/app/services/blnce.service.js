@@ -95,7 +95,7 @@
 		{
 			var currentUser = fnGetCurrentUser();
 			var config = { headers : { 'X-Auth-Token' : currentUser.token } };
-			return $http.put('/blnce/user', userData, config);
+			return $http.put('/blnce/user/' + currentUser.id, userData, config);
 		}
 
 		function fnGetTransactions() {

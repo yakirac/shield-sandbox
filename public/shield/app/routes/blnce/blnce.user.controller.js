@@ -1,12 +1,13 @@
 (function() {
 	"use strict";
-	angular.module("app.shield.blnce").controller("blnceUserController", [ "$scope", "$timeout", "$filter", "blnceService", "localStorageService", "appStatusService", "$moment", fnController ]);
-	function fnController( $scope, $timeout, $filter, blnceService, localStorageService, AppStatusService, $moment ) {
+	angular.module("app.shield.blnce").controller("blnceUserController", [ "$scope", "$timeout", "$filter", "blnceService", "PlaidService", "localStorageService", "appStatusService", "$moment", fnController ]);
+	function fnController( $scope, $timeout, $filter, blnceService, PlaidService, localStorageService, AppStatusService, $moment ) {
 		var blnceUser = this;
 		blnceUser.userSettings = {};
 		var currentBlnceUser = blnceService.getCurrentUser();
 		blnceUser.showSettings = _.isUndefined( currentBlnceUser ) || _.isNull( currentBlnceUser ) ? false : true;
 		blnceUser.appStatus = AppStatusService.isOnline() ? 'Blnce is online' : 'Blnce is offline';
+		blnceUser.showMdl = false;
 
 		getUser();
 
@@ -19,13 +20,46 @@
 			});
 		}
 
+		$scope.$on( 'blnceUser:updateshowmodal', updateShowModal );
+
+		function updateShowModal( event, showModal )
+		{
+			blnceUser.showMdl = showModal;
+		}
+
+		blnceUser.loadModal = function( transaction ) {
+			PlaidService.getInstitutions().then(function( resp ) {
+				showModal( resp );
+			}, function( error ){
+				blnceUser.errorMessage = error.data.response.message;
+			});
+		};
+
+		function showModal( resp )
+		{
+			blnceUser.showMdl = true;
+			blnceUser.accountData = {
+				institutions 	: resp.data.response.institutions,
+				currentUser 	: currentBlnceUser,
+				authDetails 	: {
+					accountName : '',
+					type 	 	: '',
+					credentials : {
+						username : '',
+						password : '',
+						pin		 : ''
+					}
+				}
+			};
+		}
+
 		blnceUser.saveSettings = function()
 		{
-			/*blnceService.saveUserSettings().then(function(){
-
+			blnceService.saveUserSettings( blnceUser.userSettings ).then(function( resp ){
+				blnceUser.errorMessage = resp.data.response.message;
 			},function( error ){
 				blnceUser.errorMessage = error.data.response.message;
-			});*/
+			});
 		}
 
 

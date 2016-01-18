@@ -120,6 +120,13 @@
 			return selectedType ? selectedType[0].symbol : 'D';
 		};
 
+		$scope.$on( 'blnce:updateshowmodal', updateShowModal );
+
+		function updateShowModal( event, showModal )
+		{
+			blnce.showMdl = showModal;
+		}
+
 		blnce.showModal = function( transaction ) {
 			blnce.showMdl = true;
 			blnce.tmpl = 'blnc';

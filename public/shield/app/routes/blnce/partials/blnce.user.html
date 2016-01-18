@@ -12,7 +12,7 @@
                 <form class="form-usersettings">
                   <h4 class="form-signin-heading" ng-cloak>{{blnceUser.errorMessage}}</h4>
                   <label for="inputUsername" class="sr-only">Name(optional)</label>
-                  <input type="text" id="name" class="form-control settings" ng-model="userSettings.name" placeholder="Name(optional)" autofocus>
+                  <input type="text" id="name" class="form-control settings" ng-model="blnceUser.userSettings.name" placeholder="Name(optional)" autofocus>
                   <label for="inputEmail" class="sr-only">Email address</label>
                   <input type="email" id="email" class="form-control settings" ng-model="blnceUser.userSettings.username" placeholder="Email Address (i.e. user@example.com)" required>
                   <label for="inputPassword" class="sr-only">Password</label>
@@ -23,11 +23,12 @@
                 <h4>Bank Accounts</h4>
                 <div id="bankAccounts">
                     <p ng-hide="blnceUser.userSettings.bankAccounts.length">You currently do not have any bank accounts linked to your profile. Add one below.</p>
-                    <div class="bank-account">
+                    <div ng-repeat="account in blnceUser.userSettings.bankAccounts" class="bank-account">
+                        <span class="account-name">{{account.name}}</span> <span><a href="">Remove</a></span>
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default" ng-click=""> <span class="green">+ Add A New Bank Account</span></button>
+                    <button type="button" class="btn btn-default" ng-click="blnceUser.loadModal()"> <span class="green">+ Add A New Bank Account</span></button>
                 </div>
 
             </div>
@@ -38,9 +39,9 @@
                 </div>
             </div>
             <div class="row">
-                <button type="button" class="btn btn-default" ng-click=""> <span class="green">Save Settings</span></button>
+                <button type="button" class="btn btn-default" ng-click="blnceUser.saveSettings()"> <span class="green">Save Settings</span></button>
             </div>
-            <!--<shieldmodal ng-show="blnce.showMdl" model="blnce.transaction" sh="blnce.showMdl" tmpl="blnc" stype="currentMonthTransactions" ctype="transactions"></shieldmodal>-->
+            <shieldmodal ng-show="blnceUser.showMdl" model="blnceUser.accountData" sh="blnceUser.showMdl" modal="blnceaccnt"></shieldmodal>
         </div>
     </div>
 </div>

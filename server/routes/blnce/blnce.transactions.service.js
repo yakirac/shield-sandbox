@@ -22,7 +22,6 @@
 
 	function handleResponse( responseData )
 	{
-		//res.status(200).json({ "result" : "Save Month Transactions", "response" : resp });
 		var response = _.extend({}, { status : responseData.status, message : responseData.message }, responseData.data );
 		responseData.res.status( responseData.status ).json({ "action" : responseData.action, "response" : response });
 	}
