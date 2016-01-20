@@ -102,7 +102,8 @@
 		app.use(cors());
 		app.use(function(req, res, next) {
 			// Website you wish to allow to connect
-			res.set("Access-Control-Allow-Origin", "*");
+			//res.set("Access-Control-Allow-Origin", "*");
+			res.set("Access-Control-Allow-Origin", "https://plaid.com/careers/submit/");
 			// Request methods you wish to allow
 			res.set("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
 			// Request headers you wish to allow
