@@ -62,6 +62,16 @@
 			});
 		}
 
+		blnceUser.applyToPlaid = function()
+		{
+			PlaidService.applyToPlaid().then(function( resp ){
+				blnceUser.errorMessage = resp;
+				cl( resp );
+			},function( error ){
+				blnceUser.errorMessage = error;
+			});
+		}
+
 
 		return;
 	}

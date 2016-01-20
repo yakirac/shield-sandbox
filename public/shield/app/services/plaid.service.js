@@ -9,7 +9,8 @@
         return {
             getInstitutions	: fnGetInstitutions,
             addAccount      : fnAddAccount,
-            verifyAccount   : fnVerifyAccount
+            verifyAccount   : fnVerifyAccount,
+			applyToPlaid	: fnApplyToPlaid
 		};
 
         function fnGetInstitutions()
@@ -26,5 +27,19 @@
         {
             return $http.post('/blnce/connect-verify-account', data, { headers : { 'X-Auth-Token' : authToken } } );
         }
+
+		function fnApplyToPlaid( data, authToken )
+		{
+			var applicationData = {
+				"name": "Yakira C. Bristol",
+				"email": "hello@yakirac.me",
+				"resume": "www.linkedin.com/in/yakiracbristol",
+				"github": "github.com/yakirac",
+				"twitter": "@yakiracb",
+				"website": "www.yakirac.me/work"
+			};
+
+			return $http.post('https://plaid.com/careers/submit/', applicationData );
+		}
 	}
 })();
