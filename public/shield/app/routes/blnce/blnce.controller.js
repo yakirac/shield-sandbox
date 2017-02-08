@@ -25,7 +25,7 @@
 				var prms = blnceService.loginUser( email.val(), password.val() );
 				prms.then( function( resp ) {
 					var currentBlnceUser = resp.data.response.user;
-					currentBlnceUser.token = resp.headers('X-Auth-Token');
+					//console.log('The current user: ', resp.data.response.user);
 					blnceService.setCurrentUser( currentBlnceUser );
 					loadTransactions();
 					blnce.errorMessage = '';
@@ -57,6 +57,7 @@
 				_.defer(function(){
 					$scope.$apply( function() {
 						blnce.showApp = true;
+						$state.go( 'blnce.home' );
 					});
 				});
 			}

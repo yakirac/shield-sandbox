@@ -14,6 +14,14 @@
 
     //USER SERVICES
 
+    function parseRequest(request) {
+    	var requestParams = {};
+    	if(Object.keys(request).length) {
+    		requestParams = JSON.parse(Object.keys(request)[0]);
+    	}
+    	return requestParams;
+    }
+
 	function validateUser( username, password )
 	{
 		if( _.isEmpty( username ) && _.isEmpty( password ) ) return 'The credentials entered were invalid';
@@ -54,36 +62,39 @@
 
     function fnLoginUser( request, res )
     {
-		var isValidLogin = validateUser( request.username, request.password );
+		var loginParams = parseRequest( request );
+		var isValidLogin = validateUser( loginParams.username, loginParams.password );
 
 		if( isValidLogin !== true )
 		{
 			handleResponse( { res : res, status : 400, action : 'Log In User', message : isValidLogin, data : {} } );
 			return;
 		}
-		var query = User.findOne({ username : request.username, password : request.password });
+		var query = User.findOne({ username : loginParams.username, password : loginParams.password });
 		query.exec().then(function(user){
 			if( _.isEmpty( user ) )
 			{
 				handleResponse( { res : res, status : 404, action : 'Log In User', message : 'The user you are trying to login as could not be found. Please check your credentials.', data : { user : user } } );
 				return;
-			}
-			user.token = generateAuthToken();
+			} 
+			var token = generateAuthToken();
+			user.token = token;
 			if( _.isUndefined(user.notificationSettings.email) ) user.notificationSettings = { email : false };
-			user.save( sendDatabaseResponse.bind({ res : res, action : 'Log In User', message : 'User is now logged in', data : { user : { id : user._id } } }) );
+			user.save( sendDatabaseResponse.bind({ res : res, action : 'Log In User', message : 'User is now logged in', data : { user : { id : user._id, token : token } } }) );
 		});
     }
 
 	function fnRegisterUser( request, res )
 	{
-		var isValidLogin = validateUser( request.username, request.password );
+		var registerParams = parseRequest( request );
+		var isValidLogin = validateUser( registerParams.username, registerParams.password );
 
 		if( isValidLogin !== true )
 		{
 			handleResponse( { res : res, status : 400, action : 'Register New User', message : isValidLogin, data : {} } );
 			return;
 		}
-		var query = User.findOne({ username : request.username, password : request.password });
+		var query = User.findOne({ username : registerParams.username, password : registerParams.password });
 		query.exec().then(function(user){
 			if( !_.isEmpty( user ) )
 			{
@@ -91,8 +102,8 @@
 				return;
 			}
 			var authToken = generateAuthToken();
-			var newUser = new User({ username : request.username, password : request.password, token : authToken });
-			newUser.save( sendDatabaseResponse.bind({ res : res, action : 'Register New User', message : 'New user registered', data : { user : { id : 0 } } }) );
+			var newUser = new User({ username : registerParams.username, password : registerParams.password, token : authToken });
+			newUser.save( sendDatabaseResponse.bind({ res : res, action : 'Register New User', message : 'New user registered', data : { user : { id : 0, token : authToken } } }) );
 		});
 	}
 

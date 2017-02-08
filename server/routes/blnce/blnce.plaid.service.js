@@ -20,6 +20,14 @@
         getAccountBalance    : fnGetAccountBalance
     };
 
+    function parseRequest(request) {
+        var requestParams = {};
+        if(Object.keys(request).length) {
+            requestParams = JSON.parse(Object.keys(request)[0]);
+        }
+        return requestParams;
+    }
+
     function handlePlaidResponse( error, mfaResponse, response )
     {
         if( error )
@@ -103,7 +111,8 @@
             }
             //console.log( data );
             //Make plaid call to add user
-            plaidClient.addConnectUser( data.authDetails.type, data.authDetails.credentials, { login_only : true }, handlePlaidResponse.bind({ res : res, action: 'Add New Account', message : 'Account successfully added', user : user, bankAccountData : data }) );
+            var requestParams = parseRequest(data.authDetails);
+            plaidClient.addConnectUser( requestParams.type, requestParams.credentials, { login_only : true }, handlePlaidResponse.bind({ res : res, action: 'Add New Account', message : 'Account successfully added', user : user, bankAccountData : data }) );
         });
     }
 

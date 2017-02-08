@@ -10,7 +10,7 @@
 
 		$scope.cls = function(){
 			//modelInfo.parentScope.sh = false;
-			modelInfo.parentScope.$emit( 'blnceUser:updateshowmodal', false );
+			modelInfo.parentScope.$emit( 'blnce:updateshowmodal', false );
 			$modalInstance.dismiss('cancel');
 		};
 
@@ -35,7 +35,7 @@
 			localStorageService.set( modelInfo.stype, modelInfo.stype && modelInfo.ctype ? sCollection : collection );
 
 			//modelInfo.parentScope.sh = false;
-			modelInfo.parentScope.$emit( 'blnceUser:updateshowmodal', false );
+			modelInfo.parentScope.$emit( 'blnce:updateshowmodal', false );
 			$modalInstance.dismiss('cancel');
             modelInfo.parentScope.$emit( 'blnce:reload', { fromModal : true, month : sCollection.month, year : sCollection.year } );
 		};

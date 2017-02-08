@@ -106,7 +106,7 @@
 			// Request methods you wish to allow
 			res.set("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
 			// Request headers you wish to allow
-			res.set("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token");
+			res.set("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token, X-Auth-Token");
 			// Pass to next layer of middleware
 			next();
 		});

@@ -3,7 +3,7 @@
 	// factory
 	angular.module( "app.core" ).factory( "blnceService", fnService );
 
-	function fnService( $http, $filter, localStorageService, $moment ) {
+	function fnService( $http, $filter, localStorageService, $moment, SERVER_API_URL ) {
 		var bService = this;
 		bService.currentBalance = 100.00;
 		bService.pastProjectedBalances = [];
@@ -55,15 +55,16 @@
 
 		function fnLoginUser( email, password )
 		{
-
 			var data = { 'username' : email, 'password' : password };
-			return $http.post( '/blnce/login', data );
+			var config = { headers : { 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8' } };
+			return $http.post(SERVER_API_URL + '/blnce/login', data);
 		}
 
 		function fnRegisterUser( email, password )
 		{
 			var data = { 'username' : email, 'password' : password };
-			return $http.post('/blnce/register', data);
+			var config = { headers : { 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8' } };
+			return $http.post(SERVER_API_URL + '/blnce/register', data, config);
 		}
 
 		function fnLogoutUser()
@@ -71,7 +72,7 @@
 			var data = {};
 			var currentUser = fnGetCurrentUser();
 			var config = { headers : { 'X-Auth-Token' : currentUser.token } };
-			return $http.post('/blnce/logout', data, config);
+			return $http.post(SERVER_API_URL + '/blnce/logout', data, config);
 		}
 
 		function fnGetCurrentUser()
@@ -88,14 +89,14 @@
 		{
 			var currentUser = fnGetCurrentUser();
 			var config = { headers : { 'X-Auth-Token' : currentUser.token } };
-			return $http.get('/blnce/user/' + currentUser.id, config);
+			return $http.get(SERVER_API_URL + '/blnce/user/' + currentUser.id, config);
 		}
 
 		function fnSaveUserSettings( userData )
 		{
 			var currentUser = fnGetCurrentUser();
 			var config = { headers : { 'X-Auth-Token' : currentUser.token } };
-			return $http.put('/blnce/user/' + currentUser.id, userData, config);
+			return $http.put(SERVER_API_URL + '/blnce/user/' + currentUser.id, userData, config);
 		}
 
 		function fnGetTransactions() {
@@ -104,7 +105,8 @@
 			if( bService.transactions === undefined || bService.transactions === null ) {
 				//return $http.get('shield/app/data/transactionmonths.json')
 				var currentBlnceUser = fnGetCurrentUser();
-				return $http.get('/blnce/transactions', { headers : { 'X-Auth-Token' : currentBlnceUser.token } })
+				console.log('The current balance user: ', currentBlnceUser);
+				return $http.get(SERVER_API_URL + '/blnce/transactions', { headers : { 'X-Auth-Token' : currentBlnceUser.token } })
 	                   .success(function( resp ){
 	                        //cl( 'Data baby: ' + resp.response );
 							bService.transactions = resp.response.transactions;
@@ -198,7 +200,7 @@
 
 		function storeMonthTransactions( monthTransactions )
 		{
-			$http.put('/blnce/transactions/' + monthTransactions.month, monthTransactions, { headers : { 'X-Auth-Token' : bService.currentUser.token } });
+			$http.put(SERVER_API_URL + '/blnce/transactions/' + monthTransactions.month, monthTransactions, { headers : { 'X-Auth-Token' : bService.currentUser.token } });
 		}
 
 		function updateCurrentBalance( currentBalance, transactionType, amount, differentMonth ) {

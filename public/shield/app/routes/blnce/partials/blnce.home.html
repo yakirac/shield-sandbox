@@ -3,7 +3,7 @@
     <div ng-hide="blnce.showApp">
         <p>This user is not authorized to view this page. Please <a ui-sref="blnce.login">login</a> to continue.</p>
     </div>
-    <div id="app-data" ng-show="blnce.showApp">
+    <div id="app-data" ng-if="blnce.showApp">
         <h1 align="center" style="font-size:60px;">Bln&cent;e</h1>
 
         <div class="projection-nav">
